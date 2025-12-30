@@ -1,204 +1,238 @@
-<html>
-<head>
-<title>SpeedSpark+ Uma Farm Tool</title>
-<hta:application 
-    id="oHTA"
-	border="thin"
-    caption="yes"
-    scroll="no"
-    windowstate="normal">
 
-<style>
-    body {
-        font-family: "Segoe UI", Tahoma, sans-serif;
-        margin: 0;
-        padding: 0;
-        overflow: hidden; 
-    }
-	
-	
 
-    /* Increased height to 120px to fit the textbox */
-	#header {
-		position: absolute; 
-		top: 0; 
-		border-bottom: 2px solid #ccc;
-		transition: border 0.8s ease-in-out;	
-		}
-	#footer { 
-		position: absolute; 
-		box-sizing: border-box;
-		width: 85%; 
-		margin: 5px 5px 0px 15px;
-		bottom: 0; 
-		border-top: 2px solid #0078d7;
-		}	
-	.headerfooter {
-		top:auto;
-		width: 100%;
-		height: 99px; 
-		background-color: #f0f0f0;
-		padding: 10px;
-		z-index: 100;
-		box-sizing: border-box;	
-		}
-	
-	.io-box {
-    width: 100%;            /* Makes it fill the footer from left to right */
-     /* A subtle grey border: border: 1px solid #ccc;  */
-    font-family: Arial;     /* Modern font */
-    box-sizing: border-box; /* Crucial: keeps the box from growing wider than the screen */
-	}
-    
-    #content {
-        position: absolute;
-        top: 100px; 
-        bottom: 0;
-        left: 5px;
-        right: 0;
-        overflow-y: auto;
-        padding: 5px 15px;
+	<html>
+	<head>
+	<title>SpeedSpark+ Uma Farm Tool</title>
+	<hta:application 
+		id="oHTA"
+		border="thin"
+		caption="yes"
+		scroll="no"
+		windowstate="normal">
 		
-		}
+		<link rel="stylesheet" type="text/css" href="styles.css">
+
+	</head>
+
+	<body>
+
+		<!-- STATS FOOTER--> 
+		<div id="footer"
+		class="headerfooter io-box
+		footer" 
+		>
+
+		<strong>Undo day | Points Gained (Training):</strong>
 		
-</style>
-</head>
+		
+		<button class="training-widgetGroup" title:"R"
+				onclick="updatepBar('progresslevelR')" >
+		<div id="levelR" class="bar-container">
+				<div "style:overflow:show;">R </div>
+				<div id="progresslevelR" class="progress-fill"> </div>
+		 </div>
+			 </button> 
+			 
+		<button class="training-widgetGroup" title:"D"
+				onclick="updatepBar('progresslevelD')" >
+		<div id="levelR" class="bar-container">
+				<div "style:overflow:show;">D </div>
+				<div id="progresslevelD" class="progress-fill"> </div>
+		 </div>
+			 </button> 
+			 
+		<button class="training-widgetGroup" title:"T"
+				onclick="updatepBar('progresslevelT')" >
+		<div id="levelT" class="bar-container">
+				<div "style:overflow:show;">T </div>
+				<div id="progresslevelT" class="progress-fill"> </div>
+		 </div>
+			 </button> 
+			
+		
 
-<body>
-
-	<!-- STATS FOOTER--> 
-	<div id="footer"
-	class="headerfooter io-box
-	footer" 
-	>
-
-	<strong>Undo day | Points Gained (Training):</strong><br>	
-	<input type="checkbox" id="resetDay"> <label for="resetDay">Undo </label>
-	
-    <input 
-	 type="number" value=" - / +"
-	 id="txtInput"
-	 style="width:7%; bottom:0; top:auto; bottom:0;"
-	 onkeypress="VBScript:If window.event.keyCode = 13 Then ProcessInput"
-	value="Pts +/-" 
-	
-	<span style="margin-left:15px; font-size: 0.9em;">
-            <input type="checkbox" id="chkEvent"> <label for="chkEvent">Event (+10)</label>
-            <input type="checkbox" id="chkExtra"> <label for="chkExtra">Extra (+5)</label>
-        </span>
-    
-
-    <br>
-    <button onclick="ProcessInput()" > Undo/Train
-	</button>
-</div>
-	 
-	 
-	<!-- TURN POINTS GAINED HEADER-->
-	<div 
-	  id="header" 
-	  class="headerfooter io-box
-	  header" 
-	 > 
+			
+			 
+		
+		
+				<br>
+		
+		<input type="checkbox" id="resetDay"> <label for="resetDay">Undo </label>
+		
+		<input 
+		 type="number" value=" - / +"
+		 tabindex="1"
+		 id="txtInput"
+		 style="width:13%; bottom:0; top:auto; bottom:0; text-align:center"
+		 onkeypress="VBScript:If window.event.keyCode = 13 Then ProcessInput"
+		value="Pts +/-" 
+		
+				<br> 
+				<! -- do not rem this br tag. the undo/train button will break if it is removed. -->  
+				
+		<button onclick="ProcessInput()" > --- Undo/Train ---
+		</button>
+			 
+				<br> 
+			 			<span style="margin-left:15px; font-size: 0.9em;">
+				<input type="checkbox" id="chkBigEvent"> <label for="chkBigEvent">Event (+20)</label>
+				<input type="checkbox" id="chkEvent"> <label for="chkEvent">Event (+10)</label>
+				<input type="checkbox" id="chkExtra"> <label for="chkExtra">Extra (+5)</label>
+						</span> 
+						
+						<span style="float:right"> 
+				<input type="checkbox" value="Charming" id="chkisCharming"
+					<label for="chkisCharming"/> Charming </button>
+				<input type="checkbox" value="HotTopic" id="chkisHT"
+					<label for="chkisHT"/> Hot Topic </button>
+						</span>
 	</div>
-	
 
-<div id="content">
+			
+	</div>
 
-	<table style="width:100%; height:100%; border-collapse: collapse;">
-	 <tr> 
-	<td id="titleCell1" style="width:30%;"> 
-    <h3>Turn History:</h3>
-    <p id="logArea"
-	style="height 100%; border: 1px solid #888888; vertical-align: top; padding: 5px;" >
-	</p>
-	
-	<td id="titlecell2" style="width:30%;" > 
-	<h3> ... </h3> 
-	<p id="td1"
-	style="height 100%; border: 1px solid #888888; padding: 5px;" >
-	<p> Welcome! Enter training gain in the box, include free bonuses (+10), (+5), click train to advance the days (Derby/Sho).</p>
-	<p> To UNDO 1 day and - skill pts gained enter the TOTAL skill points to undo, tick "undo" box and click undo/train. "Bonus" checkboxes counted with the UNDO box checked.</p>
-	</p>
-	
-	<td id="titlecell3" style="width:30%; vertical-align: top;" > 
-	<h3> ... </h3> 
-	<p id="td3"
-	style="height 100%; border: 1px solid #888888;  padding: 5px;" >
-	</p>
-	
-	
-	 </tr>
-	</td>
-	</table>
-</div>
-
-<script language="vbscript">
-
-	Dim dayTurn, totalPoints
-	 dayTurn = 0
-	 totalPoints = 0
-	
-	Dim isSilverPts, isGoldPts
-	 isSilverPts = false 
-	 isGoldPts = false 
-	 
-	Sub Window_OnLoad
-        window.resizeTo 700, 600
-        document.getElementById("logArea").innerHTML = "<br>Training in earnest begins (Turn 0)"
-    End Sub
-	
-	
-    Sub ProcessInput()
-	
-	Dim strInput, bonus, logArea
-		 strInput = document.getElementById("txtInput").value
-		 strInput = CLng(strInput)
-        Set logArea = document.getElementById("logArea")
-        ' Get the value from the inputbox 
-	
-		 if document.getElementById("resetDay").checked = true Then
-		  bonus = 0
-		  totalPoints = totalPoints - strInput
-		  dayTurn = dayTurn - 1
-		  logArea.innerHTML = "<b>Now</b> day: " & dayTurn & " Undid " & strInput & "+/-(" & bonus & ")" & "pts (New Total: " & totalPoints & ")<br>" & logArea.innerHTML
-		  
-		  document.getElementById("txtInput").value = " "
-		  Exit sub
-		 end if
+	</div>
 		 
-		 bonus = 0
-		If document.getElementById("chkEvent").checked Then bonus = bonus + 10
-		If document.getElementById("chkExtra").checked Then bonus = bonus + 5
-
-		If strInput <> "Training in earnest begins (Turn 0)" AND Not IsNumeric(strInput) Then
-         MsgBox "Error: Numbers only!"
-		' Make sure it is a number	    end if Not
-		Exit sub
-		end If 
+		 
+		 
+		 
+		<!-- TURN POINTS GAINED HEADER-->
+		<div 
+		  id="header" 
+		  class="headerfooter io-box
+		  header" 
+		 > 
+		</div>
 		
-		dayTurn = dayTurn + 1
-		totalPoints = totalPoints + CLng(strInput) + bonus
+
+	<div id="content">
+
+		<table style="width:100%; height:100%; border-collapse: collapse;">
+		 <tr> 
+		<td id="titleCell1" style="width:30%;"> 
+		<h3>Turn History:</h3>
+		<p id="logArea"
+		style="height 100%; border: 1px solid #888888; vertical-align: top; padding: 5px;" >
+		</p>
 		
-			' HEADER BORDER COLOR CHANGE
-		If totalPoints >= 600 AND isGoldPts = false Then
-        document.getElementById("header").style.borderColor = "#FFD700"
-		 isGoldPts = true
-		ElseIf totalPoints = 599 AND isSilverPts = false Then
-        ' Target the header and change the color
-        document.getElementById("header").style.borderColor = "#CD7F32"	
-		 isSilverPts = true 
-		end if
+		<td id="titlecell2" style="width:30%;" > 
+		<h3> ... </h3> 
+		<p id="td1"
+		style="height 100%; border: 1px solid #888888; padding: 5px;" >
+		<p> Welcome to SS+ Uma Farm Tool! Enter training gain in the box, include free bonuses (+10), (+5), click train to advance the days (Derby/Sho).</p>
+		<p> To UNDO 1 day and - skill pts gained enter the TOTAL skill points to undo, tick "undo" box and click undo/train. "Bonus" checkboxes counted with the UNDO box checked.</p>
+		</p>
 		
-        logArea.innerHTML = "<b>Day " & dayTurn & ":</b> Gained " & strInput & "+(" & bonus & ")" & "<br> pts (New Total: " & totalPoints & ")<br>" & logArea.innerHTML
+		<td id="titlecell3" style="width:30%; vertical-align: top;" > 
+		<h3> ... </h3> 
+		<p id="td3"
+		style="height 100%; border: 1px solid #888888;  padding: 5px;" >
+		</p>
+		
+		
+		 </tr>
+		</td>
+		</table>
+	</div>
 
-        document.getElementById("txtInput").value = " "
-    End Sub
-
-</script>
-
-</body>
-</html>
 
 
+	<script language="vbscript">
+
+		Dim dayTurn, totalPoints
+		 dayTurn = 0 : totalPoints = 0
+		
+		Dim isSilverPts, isGoldPts
+		 isSilverPts = false 
+		 isGoldPts = false 
+		 
+		Sub Window_OnLoad
+			window.resizeTo 700, 600
+			document.getElementById("logArea").innerHTML = "<br>Training in earnest begins (Turn 0)"
+		End Sub
 	
+		
+		Function objGrab(obElement)
+		Set objGrab = document.getElementById(obElement)
+		 end Function
+		 
+		
+		Sub ProcessInput()	
+		
+		Dim strInput, bonus, logArea
+		strInput = objGrab("txtInput").value
+				If strInput <> "Training in earnest begins (Turn 0)" AND Not IsNumeric(strInput) Then
+				 MsgBox "Error: Numbers only."
+				' Make sure it is a number	    end if Not
+					Exit sub
+				end If 
+			
+			strInput = CLng(strInput)
+			
+			Set logArea = objGrab("logArea")
+			' Get the value from the inputbox 
+			
+			 if objGrab("resetDay").checked = true Then
+			  bonus = 0
+			  totalPoints = totalPoints - strInput
+				if dayTurn > 0 Then
+			dayTurn = dayTurn -1	
+			  end if
+			  logArea.innerHTML = "<b>Now</b> day: " & dayTurn & " Undid " & strInput & "+/-(" & bonus & ")" & "pts (New Total: " & totalPoints & ")<br>" & logArea.innerHTML
+			  
+			  objGrab("txtInput").value = " "
+			  Exit sub
+			 end if
+			 
+			 bonus = 0
+			If objGrab("chkBigEvent").checked Then bonus = bonus + 10
+			If objGrab("chkEvent").checked Then bonus = bonus + 10
+			If objGrab("chkExtra").checked Then bonus = bonus + 5
+
+			
+			dayTurn = dayTurn + 1
+			totalPoints = totalPoints + CLng(strInput) + bonus
+		
+
+		
+				' HEADER BORDER COLOR CHANGE
+			If totalPoints >= 600 AND isGoldPts = false Then
+			document.getElementById("header").style.borderColor = "#FFD700"
+			 isGoldPts = true
+			ElseIf totalPoints = 599 AND isSilverPts = false Then
+			' Target the header and change the color
+			document.getElementById("header").style.borderColor = "#CD7F32"	
+			 isSilverPts = true 
+			end if
+			
+			logArea.innerHTML = "<b>Day " & dayTurn & ":</b> Gained " & strInput & "+(" & bonus & ")" & "<br> pts (New Total: " & totalPoints & ")<br>" & logArea.innerHTML
+
+			objGrab("txtInput").value = " "
+	
+			End Sub
+			
+			
+	Sub updatepBar(id)
+    Dim obj, currentLvl, newLvl
+    Set obj = document.getElementById(id)
+    
+    currentLvl = obj.title
+		If currentLvl = "" Then currentLvl = 1
+   
+	newLvl = CInt(currentLvl) + 1
+    
+		If newLvl > 5 Then newLvl = 5
+    
+    obj.title = newLvl
+    obj.style.height = (newLvl * 20) & "%"
+	
+	End Sub
+
+
+	</script>
+
+	</body>
+	</html>
+
+
+		
