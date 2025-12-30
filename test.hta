@@ -152,15 +152,19 @@
 		End Sub
 	
 		
-		Function objGrab(obElement)
-		Set objGrab = document.getElementById(obElement)
-		 end Function
+		Function objGrab(obElement, argo)
+			If argo = "" Then
+				Set objGrab = document.getElementById(obElement)
+			Else
+				objGrab = Eval("document.getElementById(""" & obElement & """)." & argo)
+			End If
+		End Function
 		 
 		
 		Sub ProcessInput()	
 		
 		Dim strInput, bonus, logArea
-		strInput = objGrab("txtInput").value
+		strInput = objGrab("txtInput", "value")
 				If strInput <> "Training in earnest begins (Turn 0)" AND Not IsNumeric(strInput) Then
 				 MsgBox "Error: Numbers only."
 				' Make sure it is a number	    end if Not
@@ -169,10 +173,10 @@
 			
 			strInput = CLng(strInput)
 			
-			Set logArea = objGrab("logArea")
+			Set logArea = objGrab("logArea", "")
 			' Get the value from the inputbox 
 			
-			 if objGrab("resetDay").checked = true Then
+			 if objGrab("resetDay", "checked") = true Then
 			  bonus = 0
 			  totalPoints = totalPoints - strInput
 				if dayTurn > 0 Then
@@ -180,14 +184,14 @@
 			  end if
 			  logArea.innerHTML = "<b>Now</b> day: " & dayTurn & " Undid " & strInput & "+/-(" & bonus & ")" & "pts (New Total: " & totalPoints & ")<br>" & logArea.innerHTML
 			  
-			  objGrab("txtInput").value = " "
+			  objGrab("txtInput", "").value = ""
 			  Exit sub
 			 end if
 			 
 			 bonus = 0
-			If objGrab("chkBigEvent").checked Then bonus = bonus + 10
-			If objGrab("chkEvent").checked Then bonus = bonus + 10
-			If objGrab("chkExtra").checked Then bonus = bonus + 5
+			If objGrab("chkBigEvent", "checked") Then bonus = bonus + 10
+			If objGrab("chkEvent", "checked") Then bonus = bonus + 10
+			If objGrab("chkExtra", "checked") Then bonus = bonus + 5
 
 			
 			dayTurn = dayTurn + 1
@@ -207,7 +211,7 @@
 			
 			logArea.innerHTML = "<b>Day " & dayTurn & ":</b> Gained " & strInput & "+(" & bonus & ")" & "<br> pts (New Total: " & totalPoints & ")<br>" & logArea.innerHTML
 
-			objGrab("txtInput").value = " "
+			objGrab("txtInput", "").value = ""
 	
 			End Sub
 			
@@ -225,6 +229,7 @@
     
     obj.title = newLvl
     obj.style.height = (newLvl * 20) & "%"
+
 	
 	End Sub
 
